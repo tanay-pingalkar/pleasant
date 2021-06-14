@@ -49,7 +49,7 @@ app.up();
 ```
 
 ## serving static files
-```javscript
+```javascript
 import { Server } from "https://deno.land/x/pleasant@v0.0.1/lib/lib.ts";
 
 const app = new Server(8080);
@@ -60,7 +60,7 @@ app.up();
 ```
 
 ## set headers
-```
+``` javascript
 import { Server } from "https://deno.land/x/pleasant@v0.0.1/lib/lib.ts";
 
 const app = new Server(8080);
