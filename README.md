@@ -72,5 +72,13 @@ app.get("/index", (req, res) => {
 app.up();
 ```
 
+## params
+``` javascript
+app.get("/params",(req,res)=>{
+  res.status(200).send(req.params);
+})
+```
+for `host/params?p1=123&p2=12`
+return `{"p1":"123","p2":"12"}`
 
 
