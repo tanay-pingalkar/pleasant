@@ -1,4 +1,8 @@
 {
   "deno.enable": true,
-  "deno.unstable": true
+  "deno.unstable": true,
+  "deno.suggest.imports.hosts": {
+    "https://raw.githubusercontent.com": false,
+    "https://api.deno.land": false
+  }
 }

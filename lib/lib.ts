@@ -1,5 +1,19 @@
 import { Res } from "./res.ts";
-import { route } from "./types.ts";
+import { Req, route } from "./types.ts";
+
+export const paramsResolver = (
+  param: string
+): Record<string, string> | null => {
+  const params: Record<string, string> = {};
+  if (param === undefined) {
+    return null;
+  }
+  param.split("&").forEach((par) => {
+    const [key, value] = par.split("=");
+    params[key] = value;
+  });
+  return params;
+};
 
 export class Server {
   server;
@@ -17,13 +31,23 @@ export class Server {
     for await (const conn of this.server) {
       (async () => {
         const httpConn = Deno.serveHttp(conn);
+
         for await (const requestEvent of httpConn) {
           if (requestEvent.request.method === "GET") {
-            if (this.gets[requestEvent.request.url.split(`${this.port}`)[1]]) {
+            const route = requestEvent.request.url
+              .split(`${this.port}`)[1]
+              .split("?");
+
+            const request: Req = {
+              ...requestEvent.request,
+              params: paramsResolver(route[1]),
+            } as Req;
+            if (this.gets[route[0]]) {
               try {
-                await this.gets[
-                  requestEvent.request.url.split(`${this.port}`)[1]
-                ](requestEvent.request, new Res(requestEvent.respondWith));
+                await this.gets[route[0]](
+                  request,
+                  new Res(requestEvent.respondWith)
+                );
               } catch (error) {
                 new Res(requestEvent.respondWith).send({
                   error: error.message,
