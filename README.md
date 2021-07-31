@@ -66,11 +66,19 @@ import { Server } from "https://deno.land/x/pleasant@v0.0.1/lib/lib.ts";
 const app = new Server(8080);
 
 app.get("/index", (req, res) => {
-  res.header("header name","header value")status(400).file("/index.html");
+  res.header("header name","header value").status(400).file("/index.html");
 });
 
 app.up();
 ```
 
+## params
+``` javascript
+app.get("/params",(req,res)=>{
+  res.status(200).send(req.params);
+})
+```
+for `host/params?p1=123&p2=12`
+return `{"p1":"123","p2":"12"}`
 
 
