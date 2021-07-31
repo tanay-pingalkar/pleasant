@@ -76,7 +76,7 @@ export class Server {
 
     for await (const data of dir) {
       if (data.isFile) {
-        this.gets[`${base}/${data.name}`] = async (_, res) => {
+        this.gets[`/${base}/${data.name}`] = async (_, res) => {
           res.file(`${path}/${data.name}`);
         };
       } else {
